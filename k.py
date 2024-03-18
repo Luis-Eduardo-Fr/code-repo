@@ -8,4 +8,3 @@ while True:
     if not media.is_playing():
             break
 
-are you seeing that?????:
