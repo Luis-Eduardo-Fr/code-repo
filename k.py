@@ -1,10 +1,24 @@
 import vlc
 import time
+import os
+from typing import cast
 
-media = vlc.MediaPlayer('/home/lefds/fnafsl_song.mp4')
-media.play()
-while True:
+max_wait = 2
+wait_time = 0
+
+instance = cast(vlc.Instance, vlc.Instance('--quiet --no-xlib'))
+media = instance.media_new('/home/lefds/5.mp4')
+player = instance.media_player_new()
+player.set_media(media)
+player.play()
+
+while player.is_playing:
     time.sleep(1)
-    if not media.is_playing():
-            break
+    #wait_time += 1
+    #if wait_time >= max_wait:
+#        break
+#instance.release()
+#os.kill(player.get_pid(), 9)
+    
+    
 
