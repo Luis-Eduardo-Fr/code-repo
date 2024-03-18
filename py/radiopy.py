@@ -12,9 +12,9 @@ from colorama import init, Fore, Style
 def verify_net():
     try:
         requests.get("https://www.google.com", timeout=5)
-    except requests.ConnectionError:
+    except Exception:
         print(Fore.RED + "Conecte seu computador a internet antes de continuar.." + Style.RESET_ALL)
-        os.system('exit') 
+        exit() 
 
 
 
