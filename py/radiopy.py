@@ -7,6 +7,8 @@ import subprocess
 import requests
 from colorama import init, Fore, Style
 
+
+
 def verify_net():
     try:
         requests.get("https://www.google.com", timeout=5)
@@ -18,7 +20,8 @@ def verify_net():
 
 def verify_os():
     if platform.system() == 'Linux':
-        print(Fore.YELLOW + "Sistema GNU/LINUX detectado, adaptando o programa" + Style.RESET_ALL, end = '', flush = True)
+        host_platform = 'GNU/LINUX'
+        print("Sistema" + Fore.RED + " " + host_platform + " " + Style.RESET_ALL + "detectado, adaptando o programa", end = '', flush = True)
         print('.', end = '', flush = True)
         time.sleep(0.5)
         print('.', end = '', flush = True)
@@ -26,10 +29,11 @@ def verify_os():
         print('.', end = '', flush = True)
         time.sleep(0.3)
         os.system('clear')
-        print("RADIOPY by lefds" + Fore.RED + " Linux Edition" + Style.RESET_ALL + " ALPHA 0.0.1")
+        print("RADIOPY by lefds" + Fore.RED + " Linux Edition" + Style.RESET_ALL + " " + version)
         get_info_linux()
     elif platform.system() == 'Windows':
-        print(Fore.YELLOW + "Sistema 'WINDOWS' detectado, adaptando o programa" + Style.RESET_ALL, end = '', flush = True)
+        host_platform = 'WINDOWS'
+        print("Sistema" + Fore.BLUE + " " + host_platform + " " + Style.RESET_ALL + "detectado, adaptando o programa", end = '', flush = True)
         print('.', end = '', flush = True)
         time.sleep(0.5)
         print('.', end = '', flush = True)
@@ -37,7 +41,7 @@ def verify_os():
         print('.', end = '', flush = True)
         time.sleep(0.3)
         os.system('cls')
-        print("RADIOPY by lefds" + Fore.BLUE + " Windows Edition" + Style.RESET_ALL + " ALPHA 0.0.1")
+        print("RADIOPY by lefds" + Fore.BLUE + " Windows Edition" + Style.RESET_ALL + " " + version)
         get_info_win()
 
 def get_info_linux():
@@ -54,7 +58,7 @@ def get_info_linux():
         time.sleep(0.8)
         print(".", end = '', flush=True)
         time.sleep(0.8)
-        print(Fore.YELLOW + "Encontrada!" + Style.RESET_ALL, end = '', flush=True)
+        print(Fore.GREEN + " Encontrada" + Style.RESET_ALL + "!", end = '', flush=True)
         time.sleep(1.5)
         play_radio_linux(radio_name, radio_url)
     elif ui.lower() in ['gaucha', 'gaúcha']: 
@@ -67,11 +71,19 @@ def get_info_linux():
         time.sleep(0.5)
         print(".", end = '', flush=True)
         time.sleep(0.5)
-        print(Fore.YELLOW + "Encontrada!" + Style.RESET_ALL, end = '', flush=True)
+        print(Fore.GREEN + " Encontrada!" + Style.RESET_ALL, end = '', flush=True)
         time.sleep(1)
         play_radio_linux(radio_name, radio_url)
     else:
-        loop_input = input("Estação não encontrada!\nTentar novamente?: ")
+        print(Fore.YELLOW + "Acessando o banco de dados" + Style.RESET_ALL, end = '', flush=True)
+        time.sleep(0.3)
+        print(".", end = '', flush=True)
+        time.sleep(0.3)
+        print(".", end = '', flush=True)
+        time.sleep(0.3)
+        print(".", end = '', flush=True)
+        time.sleep(0.3)
+        loop_input = input(Fore.RED +" Estação não encontrada" + Style.RESET_ALL + "!" + "\nTentar novamente?: ")
         if loop_input in ['s', 'sim', 'y', 'yes' 'claro', 'obv']:
             get_info_linux()
         elif loop_input in ['n', 'nao', 'não', 'no']:
@@ -113,7 +125,15 @@ def get_info_win():
         radio_name, radio_url = 'Gaúcha FM 93.7MHz', 'https://liverdgaupoa.rbsdirect.com.br/primary/gaucha_rbs.sdp/chunklist_36c916a3-44bd-4777-ac8e-2805b97d216b.m3u8'
         play_radio_win(radio_name, radio_url)
     else:
-        loop_input = input("Estação não encontrada!\nTentar novamente?: ")
+        print(Fore.YELLOW + "Acessando o banco de dados" + Style.RESET_ALL, end = '', flush=True)
+        time.sleep(0.3)
+        print(".", end = '', flush=True)
+        time.sleep(0.3)
+        print(".", end = '', flush=True)
+        time.sleep(0.3)
+        print(".", end = '', flush=True)
+        time.sleep(0.3)
+        loop_input = input(Fore.RED +" Estação não encontrada" + Style.RESET_ALL + "!" + "\nTentar novamente?: ")
         if loop_input in ['s', 'sim', 'y', 'yes' 'claro', 'obv']:
             get_info_win()
         elif loop_input in ['n', 'nao', 'não', 'no']:
@@ -127,7 +147,7 @@ def play_radio_win(radio_name, radio_url):
     media = instance.media_new(radio_url)
     player = instance.media_player_new()
     player.set_media(media)
-    print(Fore.YELLOW + "Tocando a " + radio_name + "!")
+    print("Tocando a " + Fore.YELLOW + radio_name + Style.RESET_ALL + "!")
     try:
         player.play()
         input("Pressione Enter para parar a reprodução..")
@@ -135,6 +155,20 @@ def play_radio_win(radio_name, radio_url):
     except Exception:
         os.system('cls')
         print(Fore.RED + "Houve um erro durante a reprodução da estação, consulte o PODEROSO lefds" + Style.RESET_ALL)
+
+
+
+
+######################################################################################################
+#
+##   RadioPY by lefds
+#
+##   ALPHA 0.0.1
+##   ALPHA 0.0.2 -- Added Net-check
+#
+
+version = 'ALPHA 0.0.2'
+
 
 # Iniciando o colorama
 init()
