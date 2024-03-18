@@ -2,7 +2,6 @@ import os
 import sys
 import subprocess
 import time
-djdjdjdj puta
 def req_check():
     try:
         subprocess.run(['mpv', '--version'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
