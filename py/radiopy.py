@@ -12,7 +12,7 @@ def verify_net():
         requests.get("https://www.google.com", timeout=5)
     except requests.ConnectionError:
         print(Fore.RED + "Conecte seu computador a internet antes de continuar.." + Style.RESET_ALL)
-        exit()
+        os.system('exit') 
 
 
 
