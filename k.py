@@ -2,7 +2,6 @@ import vlc
 import time
 import os
 from typing import cast
-
 max_wait = 2
 wait_time = 0
 

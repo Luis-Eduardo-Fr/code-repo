@@ -1,12 +1,16 @@
-from typing import cast
-import vlc
-import time
-import os
-import platform
-import subprocess
-import requests
 from colorama import init, Fore, Style
+from typing import cast
+import subprocess
+import platform
+import requests
+import time
+import vlc
+import os
 
+
+station = ['acustica', 'gaucha']
+station_name = ['Acústica FM 97.7MHz', 'Gaúcha FM 93.7MHz']
+station_url = ['https://live.virtualcast.com.br/acusticacamaqua', 'https://liverdgaupoa.rbsdirect.com.br/primary/gaucha_rbs.sdp/chunklist_36c916a3-44bd-4777-ac8e-2805b97d216b.m3u8']
 
 
 def verify_net():
@@ -44,26 +48,26 @@ def get_info_linux():
     ui = input("Digite a estação: ")
     while len(ui) == 0:
         get_info_linux()
-    if ui.lower() in ['acustica', 'acústica']:
-        radio_name, radio_url = 'Acústica FM 97.7MHz', 'https://live.virtualcast.com.br/acusticacamaqua' 
+    if ui.lower() in station[0]:
+        station_id = 0
         print(Fore.YELLOW + "Acessando o banco de dados" + Style.RESET_ALL, end = '', flush=True)
         for _ in range(3):
-            time.sleep(0.5)
+            time.sleep(0.2)
             print(".", end = '', flush=True)
-            time.sleep(0.5)
+            time.sleep(0.2)
         print(Fore.GREEN + " Encontrada" + Style.RESET_ALL + "!", end = '', flush=True)
-        time.sleep(1.5)
-        play_radio_linux(radio_name, radio_url)
-    elif ui.lower() in ['gaucha', 'gaúcha']: 
-        radio_name, radio_url = 'Gaúcha FM 93.7MHz', 'https://liverdgaupoa.rbsdirect.com.br/primary/gaucha_rbs.sdp/chunklist_36c916a3-44bd-4777-ac8e-2805b97d216b.m3u8'
+        time.sleep(0.7)
+        play_radio_linux(station_id)
+    elif ui.lower() in station[1]: 
+        station_id = 1
         print(Fore.YELLOW + "Acessando o banco de dados" + Style.RESET_ALL, end = '', flush=True)
         for _ in range(3):
-            time.sleep(0.3)
+            time.sleep(0.2)
             print(".", end = '', flush=True)
-            time.sleep(0.3)
+            time.sleep(0.2)
         print(Fore.GREEN + " Encontrada!" + Style.RESET_ALL, end = '', flush=True)
         time.sleep(0.7)
-        play_radio_linux(radio_name, radio_url)
+        play_radio_linux(station_id)
     else:
         print(Fore.YELLOW + "Acessando o banco de dados" + Style.RESET_ALL, end = '', flush=True)
         for _ in range(3):
@@ -79,12 +83,12 @@ def get_info_linux():
         
 
 
-def play_radio_linux(radio_name, radio_url):
+def play_radio_linux(station_id):
     try:
         os.system('clear')
-        print(f"Tocando a \033[1;33m{radio_name}\033[0m!")
+        print(f"Tocando a \033[1;33m{station_name[station_id]}\033[0m!")
         print("Pressione 'CTRL+C' para parar a reprodução..")
-        subprocess.run(['mpv', radio_url], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(['mpv', station_url[station_id]], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except subprocess.SubprocessError:
         os.system('clear')
         print(Fore.RED + "Houve um erro durante a reprodução da estação, consulte o PODEROSO lefds" + Style.RESET_ALL)
@@ -150,11 +154,13 @@ def play_radio_win(radio_name, radio_url):
 #
 ##   RadioPY by lefds
 #
-##   ALPHA 0.0.1
-##   ALPHA 0.0.2 -- Added Net-check
+##  ALPHA 0.0.1
+##  ALPHA 0.0.2 -- Added Net-check.
+##  ALPHA 0.0.3 -- Changed stations based on if statements, now in their own lists.
+##
 #
 
-version = 'ALPHA 0.0.2'
+version = 'ALPHA 0.0.3'
 
 
 # Iniciando o colorama
